@@ -45,7 +45,8 @@ namespace BlogTest.Controllers
             var post = _context.PostCategory.Where(cp => cp.BlogCategoryId == id).ToList();
             return View("Index", post);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ViewCountIncrement (int? id, string slug)
         {
             if(id == null || string.IsNullOrWhiteSpace(slug))
