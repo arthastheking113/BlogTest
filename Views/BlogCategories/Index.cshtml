@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BlogTest.Models.BlogCategory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1 style="color:white;">Blog Categories</h1>
+                    <h2 class="subheading" style="color:white;">Writing is fun!!! Isn't it ?</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <a asp-action="Create"><span class="button button-a">Create New</span></a>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                    <a asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">Post</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

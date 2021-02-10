@@ -1,0 +1,42 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<header class="masthead" style="background-image: url('/img/account_setting2.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto" style="font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                <div class="site-heading">
+                    <h1 style="color:white;">
+                        Account
+                    </h1>
+                    <span style="color:white;" class="subheading">Change you information at anytime</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-1"></div>
+        <div class="col">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

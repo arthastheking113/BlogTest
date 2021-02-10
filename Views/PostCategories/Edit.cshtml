@@ -1,0 +1,78 @@
+﻿@model BlogTest.Models.PostCategory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1 style="color:white;">Edit post</h1>
+                    <h2 class="subheading" style="color:white;">Something was wrong? Edit it!</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Slug" class="form-control" />
+                <input type="hidden" asp-for="CreateDate" class="form-control" />
+                <input type="hidden" asp-for="ViewCount" value="@(Model.ViewCount + 1)" class="form-control" />
+                <input type="hidden" name="imageData" value="@Convert.ToBase64String(Model.ImageData)" class="form-control" />
+                <input type="hidden" name="contentType" value="@Model.ContentType" class="form-control" />
+
+                <div class="form-group">
+                    <label asp-for="BlogCategoryId" class="control-label"></label>
+                    <select asp-for="BlogCategoryId" class="form-control" asp-items="ViewBag.BlogCategoryId"></select>
+                    <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageData" class="control-label"></label>
+                    <input type="file" name="image" />
+                    <span asp-validation-for="ImageData" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Abstract" class="control-label"></label>
+                    <textarea asp-for="Abstract" class="form-control"></textarea>
+                    <span asp-validation-for="Abstract" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsproductionReady" /> @Html.DisplayNameFor(model => model.IsproductionReady)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-secondary" />
+                </div>
+                <div>
+                    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

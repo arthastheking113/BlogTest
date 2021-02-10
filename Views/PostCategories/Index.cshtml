@@ -1,0 +1,117 @@
+﻿@using BlogTest.Service
+@inject IImageService imageService
+@model IEnumerable<BlogTest.Models.PostCategory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1 style="color:white;">Blog Post</h1>
+                    <h2 class="subheading" style="color:white;">Writing is fun!!! Isn't it ?</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <a asp-action="Create"><span class="btn btn-secondary">Create New</span></a>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>@Html.DisplayNameFor(model => model.ViewCount)</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Abstract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsproductionReady)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BlogCategory)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <img src="@imageService.DecodeFile(item.ImageData,item.ContentType)" class="img-fluid" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ViewCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.Raw(item.Abstract)
+                </td>
+                <td>
+                    @Html.Raw(item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsproductionReady)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BlogCategory.Name)
+                </td>
+                <td>
+                    <div class="btn-group-vertical">
+                        <span class="btn btn-secondary" style="border:1px solid"><a class="text-white" asp-action="Edit" asp-route-id="@item.Id">Edit</a></span>
+                        <span class="btn btn-secondary" style="border:1px solid"><a class="text-white" asp-action="Details" asp-route-slug="@item.Slug">Details</a></span>
+                        <span class="btn btn-secondary" style="border:1px solid"><a class="text-white" asp-action="Delete" asp-route-id="@item.Id">Delete</a></span>
+                    </div>
+
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+

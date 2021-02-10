@@ -1,0 +1,103 @@
+﻿@model BlogTest.Service.Contact;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<BlogUser> SignInManager
+@inject UserManager<BlogUser> UserManager
+
+@{
+    ViewData["Title"] = "Contact";
+}
+<header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1 style="color:white;">Contact Me</h1>
+                    <span  style="color:white;" class="subheading">Send me your message</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var person = await UserManager.FindByNameAsync(User.Identity.Name);
+                <div class="row">
+                    <div class="col">
+                        <form asp-action="Contact" method="post">
+                            <input type="hidden" asp-for="Name" value="@person.FullName" class="form-control" />
+                            <input type="hidden" asp-for="Email" value="@person.Email" class="form-control" />
+
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls">
+                                    <input type="text" asp-for="Subject" class="form-control" placeholder="Subject" />
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <textarea id="contact" type="text" asp-for="Message" class="form-control"></textarea>
+                                    <span asp-validation-for="Message" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class=" button-big button button-a btn-block" style="background-color:#1cd5db;font-size: 14px;font-weight: 800;letter-spacing: 1px;text-transform: uppercase;border-radius: 0;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;color:white;" type="submit">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col">
+                        <form asp-action="Contact" method="post">
+
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls">
+                                    <input type="text" asp-for="Name" class="form-control" placeholder="Your Name" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls">
+                                    <input type="text" asp-for="Email" class="form-control" placeholder="Your Email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls">
+                                    <input type="text" asp-for="Subject" class="form-control" placeholder="Subject" />
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <textarea id="contact" type="text" asp-for="Message" class="form-control"></textarea>
+                                    <span asp-validation-for="Message" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="button-big button button-a btn-secondary" style="background-color:grey;font-size: 14px;font-weight: 800;letter-spacing: 1px;text-transform: uppercase;border-radius: 0;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" type="submit">Send Message</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                </div>
+            }
+
+           
+           
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+

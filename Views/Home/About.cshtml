@@ -1,0 +1,35 @@
+﻿@model BlogTest.Service.Contact;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<BlogUser> SignInManager
+@inject UserManager<BlogUser> UserManager
+
+@{
+    ViewData["Title"] = "Contact";
+}  <!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1  style="color:white;">About Me</h1>
+                    <span  style="color:white;" class="subheading">This is what I do.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <p>My name is Duy Lan Le, and I'm a Fullstack .Net Developer. I made this Blog's site by using .Net MVC with Postgress at my Database. I host this website on Heroku because it's... free :).</p>
+            <p>This is my first project using .Net MVC and I learn a lot from this project. In this website, I can write my own blog and attach Image in to it. It has authentication, authorization, and a comment system. Thus, you can register an account in my website by using your email or you can use other method like Google, Facebook, Github, or Twitter.</p>
+            <p>You can comment and having fun with my blog, and if you want, you can contact me through a contact tab on the navigation bar, or you can have a short look at my portfolio if you want to hire me as your employee :).</p>
+        </div>
+    </div>
+</div>
+
+
+

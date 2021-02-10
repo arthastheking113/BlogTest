@@ -1,0 +1,227 @@
+﻿@using BlogTest.Data
+@inject ApplicationDbContext DbContext
+@model BlogTest.Models.PostCategory
+@using Microsoft.AspNetCore.Identity
+@using BlogTest.Service
+@inject IImageService imageService
+@inject SignInManager<BlogUser> SignInManager
+@inject UserManager<BlogUser> UserManager
+@{
+    ViewData["Title"] = "Details";
+}
+
+<header class="masthead" style="background-image: url('@imageService.DecodeFile(Model.ImageData,Model.ContentType)');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading" style="font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                    <h1 style="color:white;">@Html.DisplayFor(model => model.Title)</h1>
+                    <span class="meta">
+                        Posted by
+                        <a href="#">Duy Lan Le</a>
+                        on @Html.DisplayFor(model => model.CreateDate) in <span class="ion-pricetag"></span><b> @Html.DisplayFor(model => model.BlogCategory.Name)</b>
+
+                    </span>
+                    <span class="meta">Edited on @Html.DisplayFor(model => model.UpdateDate)</span>
+                    <p><span class="ion-chatbox" style="padding-right:2%"> @Model.PostComments.Count </span> <span class="text-white"><span class="iconify" data-icon="carbon:view-filled" data-inline="true"></span> @Model.ViewCount Views</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-md-8">
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn btn-secondary" style="background-color:#ffffff">
+                            <a asp-controller="PostCategories" asp-action="Edit" asp-route-id="@Model.Id"><span class="iconify" data-icon="ant-design:edit-filled" data-inline="true"></span> Edit Post</a>
+                        </button>
+                        <button class="btn btn-secondary" style="background-color:#ffffff">
+                            <a asp-controller="PostCategories" asp-action="Delete" asp-route-id="@Model.Id"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="true"></span> Delete Post</a>
+                        </button>
+                    </div>
+                </div>
+
+            }
+            <br />
+            <!-- Post Content -->
+            @Html.Raw(Model.Content)
+
+            <!-- Comments Form -->
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="card my-4" style="border:1px solid rgb(28, 213, 219);">
+                    <h5 class="card-header">Leave a Comment:</h5>
+                    <form asp-controller="PostComments" asp-action="Create">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <textarea id="commentContent" name="Content" class="form-control"></textarea>
+                            </div>
+                            <input type="hidden" asp-for="Slug" class="form-control" />
+                            <input type="hidden" name="PostCategoryId" value="@Model.Id" class="form-control" />
+                            <button type="submit" class="btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">Comment</button>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+
+
+                <h4 class="card-body text-center" style="border:1px solid rgb(28, 213, 219);">
+                    <button class="btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
+                        <a class="text-white" href="/Identity/Account/Login">
+                            Login To Comment
+                        </a>
+                    </button>
+                </h4>
+
+
+            }
+
+
+
+            <!-- Comments Form -->
+            <!-- Single Comment -->
+
+            <div class="row">
+                <div class="col">
+                    <h4 class="title-comment">Comments(@Model.PostComments.Count()) </h4>
+                </div>
+            </div>
+            <br />
+
+            @foreach (var comment in Model.PostComments.OrderByDescending(c => c.CommentDate))
+            {
+                var currentTime = DateTime.Now;
+                var timeSpan = currentTime.Subtract(comment.CommentDate);
+                var eslapseSecond = timeSpan.Seconds;
+                var eslapseMinute = timeSpan.Minutes;
+                var eslapseHours = timeSpan.Hours;
+                var eslapseDate = timeSpan.Days;
+                string commentdate;
+                if (eslapseDate >= 1)
+                {
+                    commentdate = eslapseDate.ToString() + " Days Ago";
+                }
+                else if (eslapseHours >= 1)
+                {
+                    commentdate = eslapseHours.ToString() + " Hours Ago";
+                }
+                else if (eslapseMinute >= 1)
+                {
+                    commentdate = eslapseMinute.ToString() + " Minutes Ago";
+                }
+                else
+                {
+                    commentdate = eslapseSecond.ToString() + " Seconds Ago";
+                }
+                <div class="media mb-4" style="border-bottom:2px solid rgb(28, 213, 219)">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">@comment.BlogUser.FullName</h5>
+                        <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
+                            <div class="col text-left" style="padding:0px 0px">
+                                @Html.Raw(comment.Content)
+                            </div>
+                            <div class="col text-right">
+                                <p style="margin:0px;padding:0px;">@commentdate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="sticky">
+                <div class="card">
+                    <h5 class="card-header">Search For Anything</h5>
+                    <div class="card-body">
+                        <form asp-controller="Home" asp-action="Index" method="get">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search for...">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit">Search <span class="iconify" data-icon="bi:search" data-inline="true"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Categories Widget -->
+
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <ul class="list-unstyled mb-0" style="background-color:#fff0;border:none;">
+
+
+                                    @foreach (var item in DbContext.BlogCategory.ToList())
+                                    {
+                                        <li>
+                                            <a style="background-color: #fff0; border: none; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 0.25rem 0rem" asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+
+
+                <div class="card my-4">
+                    <h5 class="card-header">May be you will like</h5>
+                    <div class="card-body ">
+                        @if (DbContext.PostCategory.ToList().Count() > 4)
+                        {
+                            var count = 1;
+                            @foreach (var item in DbContext.PostCategory.ToList())
+                            {
+                                if (count == 5)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    <div class="row" style="padding-bottom:10px;">
+                                        <div class="col">
+                                            <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
+                                        </div>
+                                    </div>
+                                    count += 1;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            @foreach (var item in DbContext.PostCategory.ToList())
+                            {
+                                <div class="row" style="padding-bottom:10px;">
+                                    <div class="col">
+                                        <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

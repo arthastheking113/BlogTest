@@ -1,0 +1,179 @@
+﻿@using BlogTest.Data
+@inject ApplicationDbContext DbContext
+@using BlogTest.Service
+@model IEnumerable<BlogTest.Models.PostCategory>
+@{
+    ViewData["Title"] = "Home Page";
+}
+@inject IImageService imageService
+
+<header class="masthead" style="background-image: url('/img/home-program2.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto" style="font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                <div class="site-heading">
+                    <h1 style="color:white;">
+                        Welcome
+                    </h1>
+                    <span style="color:white;" class="subheading">The Blog Where I Share All Of My Story</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+            <!--If(User.Identity.IsAuthenticated) to check if user login or not-->
+            <!-- Blog Post -->
+            @foreach (var item in Model)
+            {
+            <div class="card mb-4">
+                <img class="card-img-top" src="@imageService.DecodeFile(item.ImageData,item.ContentType)" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title" style="font-family:Comic Sans MS, Comic Sans, cursive"> @Html.DisplayFor(modelItem => item.Title)</h2>
+                    <p class="card-text"> @Html.Raw(item.Abstract)</p>
+                    <form asp-controller="PostCategories" asp-action="ViewCountIncrement" asp-route-id="@item.Id" asp-route-slug="@item.Slug" id="post-@item.Id"></form>
+                    <a class="btn btn-secondary" href="javascript:document.getElementById('post-@item.Id').submit()">Read More &rarr;</a>
+                </div>
+                <div class="card-footer" style="background-color:#f7f7f7;color:#8e8e8e">
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                            Posted on  <span class="text-dark">@Html.DisplayFor(modelItem => item.CreateDate)</span> by
+                            <a class="text-dark" href="">Duy Lan Le</a> in <span class="iconify text-dark" data-icon="bx:bxs-tag-alt" data-inline="true"></span>
+                            <span class="text-dark"> @Html.DisplayFor(modelItem => item.BlogCategory.Name)   </span>
+                            <span class="ion-chatbox text-dark"> @Html.DisplayFor(modelItem => item.PostComments.Count)</span>
+                        </div>
+                        <div class="col-2 m-0 p-0">
+                            <span class="text-dark"><span class="iconify" data-icon="carbon:view-filled" data-inline="true"></span> @Html.DisplayFor(modelItem => item.ViewCount) Views</span>
+                        </div>
+                    </div>
+                   
+                </div>
+
+            </div>
+            }
+
+
+
+            <div class="row">
+                <div class="col text-center">
+                    <form asp-controller="Home" asp-action="Index" method="get">
+                        <input type="hidden" name="search" value="@ViewBag.search" />
+                        @if ((int)ViewBag.page - 1 > 0)
+                        {
+                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page - 1)">Newer <span class="iconify" data-icon="fe:arrow-left" data-inline="true"></span></button>
+                        }
+                        @for (var loop = 1; loop <= ViewBag.totalPage; loop++)
+                        {
+                            var myClass = "btn-secondary";
+                            if (loop == (int)ViewBag.page)
+                            {
+                                myClass = "btn-dark";
+                            }
+                            <button class="btn @myClass" type="submit" name="page" value="@loop">@loop</button>
+                        }
+                        @if ((int)ViewBag.page + 1 <= ViewBag.totalPage)
+                        {
+                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page + 1)"><span class="iconify" data-icon="fe:arrow-right" data-inline="true"></span> Older</button>
+                        }
+                    </form>
+                </div>
+            </div>
+
+
+
+            <!-- Blog Post -->
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="sticky">
+                <div class="card">
+                    <h5 class="card-header">Search For Anything</h5>
+                    <div class="card-body">
+                        <form asp-controller="Home" asp-action="Index" method="get">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search for...">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit">Search <span class="iconify" data-icon="bi:search" data-inline="true"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Categories Widget -->
+
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <ul class="list-unstyled mb-0" style="background-color:#fff0;border:none;">
+
+
+                                    @foreach (var item in DbContext.BlogCategory.ToList())
+                                    {
+                                        <li>
+                                            <a style="background-color: #fff0; border: none; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 0.25rem 0rem" asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+
+
+                <div class="card my-4">
+                    <h5 class="card-header">May be you will like</h5>
+                    <div class="card-body ">
+                        @if (DbContext.PostCategory.ToList().Count() > 4)
+                        {
+                            var count = 1;
+                            var postList = DbContext.PostCategory.ToList();
+                            postList =  postList.OrderBy(a => Guid.NewGuid()).ToList();
+                            @foreach (var item in postList)
+                            {
+                                if (count == 5)
+                                {
+                                    break;  
+                                }
+                                else
+                                {
+                                    <div class="row" style="padding-bottom:10px;">
+                                        <div class="col">
+                                            <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
+                                        </div>
+                                    </div>
+                                    count += 1;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            @foreach (var item in DbContext.PostCategory.ToList())
+                            {
+                                <div class="row" style="padding-bottom:10px;">
+                                    <div class="col">
+                                        <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>

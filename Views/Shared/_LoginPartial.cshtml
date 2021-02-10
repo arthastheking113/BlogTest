@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<BlogUser> SignInManager
+@inject UserManager<BlogUser> UserManager
+<form asp-area="Identity" id="Identitylogout" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+    <ul class="navbar-nav ml-auto">
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var person = (await UserManager.FindByNameAsync(User.Identity.Name)).FullName;
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">Hello @person</a>
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="nav-link btn" style="color:white;font-size:12px;">Logout</button>
+            </li>
+
+
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+        }
+
+        </ul>
+</form>
