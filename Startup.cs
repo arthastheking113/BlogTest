@@ -72,7 +72,7 @@ namespace BlogTest
                  .AddTwitter(options =>
             {
                 options.ConsumerKey = "MUeZFzSIM0kiXc9XLNq16QURi";
-                options.ConsumerSecret = "1trWiVSuKHSqqxkGJcDh2l7dGJObGOKmx55rAxviOsudPYEyzR";
+                options.ConsumerSecret = "e3a0600ca0b68ccbe83a2e1309bb299c86a39cd6";
                 options.RetrieveUserDetails = true;
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
