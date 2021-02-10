@@ -53,8 +53,8 @@ namespace BlogTest
             services.AddAuthentication()
                 .AddGitHub(options =>
             {
-                options.ClientId = "e97d7aee82af0d62c1af";
-                options.ClientSecret = "348bfb1766841299913bf5d4049aa4760535da7a";
+                options.ClientId = "2393935c67ed0081500a";
+                options.ClientSecret = "6f3f252be0b3d8d8a541d3ec1f41b6ce7197f281";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             })
                 .AddGoogle(options =>
