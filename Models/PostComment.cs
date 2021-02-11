@@ -14,7 +14,9 @@ namespace BlogTest.Models
         public DateTime CommentDate { get; set; }
         public DateTime? Update { get; set; }
 
-        public DateTime? Moderated { get; set; }
+
+        public bool IsModerated { get; set; }
+        public DateTime Moderated { get; set; }
         [Display(Name ="Moderated Reason")]
         public string ModeratedReason { get; set; }
         [Display(Name = "Moderated Content")]

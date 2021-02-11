@@ -104,7 +104,7 @@ namespace BlogTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,CommentDate,Update,Moderated,ModeratedReason,ModeratedContent,PostCategoryId,BlogUserId")] PostComment postComment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,CommentDate,Update,Moderated,IsModerated,ModeratedReason,ModeratedContent,PostCategoryId,BlogUserId")] PostComment postComment)
         {
             if (id != postComment.Id)
             {
@@ -115,6 +115,9 @@ namespace BlogTest.Controllers
             {
                 try
                 {
+                    postComment.IsModerated = true;
+                    postComment.Moderated = DateTime.Now;
+                    postComment.BlogUserId = _userManager.GetUserId(User);
                     _context.Update(postComment);
                     await _context.SaveChangesAsync();
                 }

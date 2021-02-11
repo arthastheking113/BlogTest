@@ -100,45 +100,112 @@
             @foreach (var comment in Model.PostComments.OrderByDescending(c => c.CommentDate))
             {
                 var currentTime = DateTime.Now;
-                var timeSpan = currentTime.Subtract(comment.CommentDate);
-                var eslapseSecond = timeSpan.Seconds;
-                var eslapseMinute = timeSpan.Minutes;
-                var eslapseHours = timeSpan.Hours;
-                var eslapseDate = timeSpan.Days;
-                string commentdate;
-                if (eslapseDate >= 1)
-                {
-                    commentdate = eslapseDate.ToString() + " Days Ago";
-                }
-                else if (eslapseHours >= 1)
-                {
-                    commentdate = eslapseHours.ToString() + " Hours Ago";
-                }
-                else if (eslapseMinute >= 1)
-                {
-                    commentdate = eslapseMinute.ToString() + " Minutes Ago";
-                }
-                else
-                {
-                    commentdate = eslapseSecond.ToString() + " Seconds Ago";
-                }
                 <div class="media mb-4" style="border-bottom:2px solid rgb(28, 213, 219)">
-                    <img class="d-flex mr-3 rounded-circle" style="width:10%"  src="@imageService.DecodeFileAvatar(comment.BlogUser.ImageData,comment.BlogUser.ContentType)"  alt="">
+                    <img class="d-flex mr-3 rounded-circle" style="width:10%" src="@imageService.DecodeFileAvatar(comment.BlogUser.ImageData,comment.BlogUser.ContentType)" alt="">
                     <div class="media-body">
-                        <h5 class="mt-0">@comment.BlogUser.FullName</h5>
-                        <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
-                            <div class="col text-left" style="padding:0px 0px">
-                                @Html.Raw(comment.Content)
+                        @if (!comment.IsModerated)
+                        {
+                            var timeSpan = currentTime.Subtract(comment.CommentDate);
+                            var eslapseSecond = timeSpan.Seconds;
+                            var eslapseMinute = timeSpan.Minutes;
+                            var eslapseHours = timeSpan.Hours;
+                            var eslapseDate = timeSpan.Days;
+                            string commentdate;
+                            if (eslapseDate >= 1)
+                            {
+                                commentdate = eslapseDate.ToString() + " Days Ago";
+
+                            }
+                            else if (eslapseHours >= 1)
+                            {
+                                commentdate = eslapseHours.ToString() + " Hours Ago";
+                            }
+                            else if (eslapseMinute >= 1)
+                            {
+                                commentdate = eslapseMinute.ToString() + " Minutes Ago";
+                            }
+                            else
+                            {
+                                commentdate = eslapseSecond.ToString() + " Seconds Ago";
+                            }
+                        <div class="row">
+                            <div class="col text-left">
+                                <h5 class="mt-0">@comment.BlogUser.FullName</h5>
                             </div>
-                            <div class="col text-right">
-                                <p style="margin:0px;padding:0px;">@commentdate</p>
-                            </div>
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                            {
+                                <div class="col text-right">
+                                    <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
+                                    <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
+                                </div>
+                            }
+
                         </div>
-                    </div>
+                            
+                            <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
+                                <div class="col text-left" style="padding:0px 0px">
+                                    @Html.Raw(comment.Content)
+                                </div>
+                                <div class="col text-right">
+                                    <p style="margin:0px;padding:0px;">@commentdate</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            var ModeratedDate = currentTime.Subtract(comment.Moderated);
+                            var SecondModeratedDate = ModeratedDate.Seconds;
+                            var MinuteModeratedDate = ModeratedDate.Minutes;
+                            var HoursModeratedDate = ModeratedDate.Hours;
+                            var DateModeratedDate = ModeratedDate.Days;
+                            string ModeratedTime;
+                            if (DateModeratedDate >= 1)
+                            {
+                                ModeratedTime = DateModeratedDate.ToString() + " Days Ago";
+
+                            }
+                            else if (HoursModeratedDate >= 1)
+                            {
+                                ModeratedTime = HoursModeratedDate.ToString() + " Hours Ago";
+                            }
+                            else if (MinuteModeratedDate >= 1)
+                            {
+                                ModeratedTime = MinuteModeratedDate.ToString() + " Minutes Ago";
+                            }
+                            else
+                            {
+                                ModeratedTime = SecondModeratedDate.ToString() + " Seconds Ago";
+                            }
+                            <div class="row">
+                                <div class="col text-left">
+                                    <h5 class="mt-0">@(comment.BlogUser.FullName) (Edited By Mod)</h5>
+                                </div>
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                {
+                                    <div class="col text-right">
+                                        <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
+                                        <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p style="font-style: italic;font-weight: lighter;">Reason: @comment.ModeratedReason</p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
+                                <div class="col text-left" style="padding:0px 0px">
+                                    @Html.Raw(comment.ModeratedContent)
+                                </div>
+                                <div class="col text-right">
+                                    <p style="margin:0px;padding:0px;">Edited @ModeratedTime</p>
+                                </div>
+                            </div>
+                        }
+                    </div>      
                 </div>
 
             }
-
         </div>
         <div class="col-md-4">
             <!-- Search Widget -->

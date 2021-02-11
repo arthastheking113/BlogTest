@@ -17,77 +17,86 @@
         </div>
     </div>
 </header>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col text-center">
             <button class="btn btn-secondary"><a asp-action="Create">Create New Comment</a></button>
         </div>
     </div>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CommentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Update)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Moderated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeratedReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeratedContent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostCategory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BlogUserId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Update)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Moderated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeratedReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeratedContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostCategory.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlogUserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <br />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CommentDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Update)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsModerated)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Moderated)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModeratedReason)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModeratedContent)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PostCategory)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BlogUserId)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CommentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Update)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsModerated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Moderated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModeratedReason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModeratedContent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostCategory.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BlogUserId)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div> 
+</div>  

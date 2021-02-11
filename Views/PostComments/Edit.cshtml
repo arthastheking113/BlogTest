@@ -4,75 +4,55 @@
     ViewData["Title"] = "Edit";
 }
 
-<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+<header class="masthead" style="background-image: url('/img/account_setting2.jpg');">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="post-heading">
-                    <h1 style="color:white;">Edit Comment</h1>
-                    <h2 class="subheading" style="color:white;">Writing is fun!!! Isn't it ?</h2>
+            <div class="col-lg-8 col-md-10 mx-auto" style="font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                <div class="site-heading">
+                    <h1 style="color:white;">
+                        Edit
+                    </h1>
+                    <span style="color:white;" class="subheading">Some comment is unacceptable</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CommentDate" class="control-label"></label>
-                <input asp-for="CommentDate" class="form-control" />
-                <span asp-validation-for="CommentDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Update" class="control-label"></label>
-                <input asp-for="Update" class="form-control" />
-                <span asp-validation-for="Update" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Moderated" class="control-label"></label>
-                <input asp-for="Moderated" class="form-control" />
-                <span asp-validation-for="Moderated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModeratedReason" class="control-label"></label>
-                <input asp-for="ModeratedReason" class="form-control" />
-                <span asp-validation-for="ModeratedReason" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModeratedContent" class="control-label"></label>
-                <input asp-for="ModeratedContent" class="form-control" />
-                <span asp-validation-for="ModeratedContent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostCategoryId" class="control-label"></label>
-                <select asp-for="PostCategoryId" class="form-control" asp-items="ViewBag.PostCategoryId"></select>
-                <span asp-validation-for="PostCategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlogUserId" class="control-label"></label>
-                <input asp-for="BlogUserId" class="form-control" />
-                <span asp-validation-for="BlogUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-secondary" />
-            </div>
-            <div>
-                <a class="btn btn-secondary" asp-action="Index">Back to List</a>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="PostCategoryId" value="@Model.PostCategoryId" />
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModeratedReason" class="control-label"></label>
+                    <textarea asp-for="ModeratedReason" class="form-control"></textarea>
+                    <span asp-validation-for="ModeratedReason" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModeratedContent" class="control-label"></label>
+                    <textarea asp-for="ModeratedContent" class="form-control"></textarea>
+                    <span asp-validation-for="ModeratedContent" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-secondary" />
+                </div>
+                <div>
+                    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                </div>
 
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 
 
 @section Scripts {
