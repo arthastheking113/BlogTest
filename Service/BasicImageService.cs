@@ -41,7 +41,7 @@ namespace BlogTest.Service
         {
             if (imageData == null)
             {
-                return "http://placehold.it/50x50";
+                return "/img/avatar.png";
             }
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";
