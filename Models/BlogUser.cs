@@ -23,6 +23,9 @@ namespace BlogTest.Models
         [NotMapped]
         public string FormalName { get { return $"{LastName},{FirstName}"; } }
 
+        [Display(Name = "Change Avatar")]
+        public Byte[] ImageData { get; set; }
+        public string ContentType { get; set; }
 
         public virtual ICollection<PostComment> PostComments  { get; set; }
     }

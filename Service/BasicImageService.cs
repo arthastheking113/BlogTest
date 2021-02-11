@@ -37,5 +37,14 @@ namespace BlogTest.Service
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";
         }
+        public string DecodeFileAvatar(byte[] imageData, string contentType)
+        {
+            if (imageData == null)
+            {
+                return "http://placehold.it/50x50";
+            }
+            var imageArray = Convert.ToBase64String(imageData);
+            return $"data:{contentType};base64,{imageArray}";
+        }
     }
 }

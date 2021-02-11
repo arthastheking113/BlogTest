@@ -1663,3 +1663,11 @@ form .form-group:first-child .floating-label-form-group {
 .dropdown-item-white {
     background-color: #fff;
 }
+
+.avatar {
+    vertical-align: middle;
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+}
+

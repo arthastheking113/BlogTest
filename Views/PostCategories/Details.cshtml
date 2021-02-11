@@ -123,7 +123,7 @@
                     commentdate = eslapseSecond.ToString() + " Seconds Ago";
                 }
                 <div class="media mb-4" style="border-bottom:2px solid rgb(28, 213, 219)">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <img class="d-flex mr-3 rounded-circle" style="width:10%"  src="@imageService.DecodeFileAvatar(comment.BlogUser.ImageData,comment.BlogUser.ContentType)"  alt="">
                     <div class="media-body">
                         <h5 class="mt-0">@comment.BlogUser.FullName</h5>
                         <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
