@@ -88,7 +88,7 @@ namespace BlogTest.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile image,  Byte[]? imageData, string contentType)
+        public async Task<IActionResult> OnPostAsync(IFormFile image, Byte[]? imageData, string contentType)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
