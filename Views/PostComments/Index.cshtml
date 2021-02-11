@@ -63,7 +63,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Content)
+                            @Html.Raw(item.Content)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CommentDate)
@@ -78,10 +78,10 @@
                             @Html.DisplayFor(modelItem => item.Moderated)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModeratedReason)
+                            @Html.Raw(item.ModeratedReason)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModeratedContent)
+                            @Html.Raw(item.ModeratedContent)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PostCategory.Id)
