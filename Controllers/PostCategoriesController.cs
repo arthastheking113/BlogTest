@@ -36,14 +36,48 @@ namespace BlogTest.Controllers
         }
 
         // GET: PostCategories/Details/5
-        public IActionResult CategoryIndex(int? id)
+        public async Task<IActionResult> CategoryIndexAsync(int? id, int? page, string search)
         {
-            if (id == null)
+            page ??= 1;
+            var pageSize = 3;
+            var totalPage = 0;
+            var totalRecord = 0;
+
+            if (search != null)
             {
-                return NotFound();
+                search = search.ToLower();
+                var postSearch = await _context.PostCategory.Include(h => h.PostComments).Where(cp => cp.BlogCategoryId == id).Where(y => y.IsproductionReady).Where(x => x.Title.ToLower().Contains(search) ||
+                                                                x.Content.ToLower().Contains(search) ||
+                                                                x.Abstract.ToLower().Contains(search) ||
+                                                                x.BlogCategory.Name.ToLower().Contains(search) ||
+                                                                x.BlogCategory.Description.ToLower().Contains(search) ||
+                                                                x.PostComments.Any(c => c.Content.ToLower().Contains(search) ||
+                                                                                    c.BlogUser.FirstName.ToLower().Contains(search) ||
+                                                                                    c.BlogUser.LastName.ToLower().Contains(search) ||
+                                                                                    c.BlogUser.Email.ToLower().Contains(search))).ToListAsync();
+                postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
+                totalRecord = postSearch.Count;
+                totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
+                var skipCount = ((int)page - 1) * pageSize;
+                var posts = postSearch.Skip(skipCount).Take(pageSize);
+                ViewData["search"] = search;
+                ViewData["totalPage"] = totalPage;
+                ViewData["page"] = page;
+                return View("Index", posts);
             }
-            var post = _context.PostCategory.Where(cp => cp.BlogCategoryId == id).ToList();
-            return View("Index", post);
+            else
+            {
+                var postSearch = await _context.PostCategory.Include(h => h.PostComments).Include(p => p.BlogCategory).Where(cp => cp.BlogCategoryId == id).Where(y => y.IsproductionReady).ToListAsync();
+                postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
+                totalRecord = postSearch.Count;
+                totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
+                var skipCount = ((int)page - 1) * pageSize;
+                var posts = postSearch.Skip(skipCount).Take(pageSize);
+                ViewData["search"] = search;
+                ViewData["totalPage"] = totalPage;
+                ViewData["page"] = page;
+                return View("Index", posts);
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

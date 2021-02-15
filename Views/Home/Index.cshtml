@@ -64,7 +64,7 @@
                         <input type="hidden" name="search" value="@ViewBag.search" />
                         @if ((int)ViewBag.page - 1 > 0)
                         {
-                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page - 1)">Newer <span class="iconify" data-icon="fe:arrow-left" data-inline="true"></span></button>
+                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page - 1)">Previous Page <span class="iconify" data-icon="fe:arrow-left" data-inline="true"></span></button>
                         }
                         @for (var loop = 1; loop <= ViewBag.totalPage; loop++)
                         {
@@ -77,7 +77,7 @@
                         }
                         @if ((int)ViewBag.page + 1 <= ViewBag.totalPage)
                         {
-                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page + 1)"><span class="iconify" data-icon="fe:arrow-right" data-inline="true"></span> Older</button>
+                            <button type="submit" class="btn btn-secondary" name="page" value="@((int)ViewBag.page + 1)"><span class="iconify" data-icon="fe:arrow-right" data-inline="true"></span> Next Page</button>
                         }
                     </form>
                 </div>

@@ -44,15 +44,18 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
                         <div class="dropdown-menu" style="background-color:#fff0;border:none;" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="Home" asp-action="Index">View All</a>
 
                             @foreach (var item in DbContext.BlogCategory.ToList())
                             {
                                 <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
                             }
-                            <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="BlogCategories" asp-action="Index">Edit Category</a>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="BlogCategories" asp-action="Index">Edit Category</a>
 
-                            <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="BlogCategories" asp-action="Create">Create New Category</a>
-
+                                <a class="dropdown-item dropdown-item-transparent" style="background-color: #fff0; border: none; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;" asp-controller="BlogCategories" asp-action="Create">Create New Category</a>
+                            }
 
 
                         </div>

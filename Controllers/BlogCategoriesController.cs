@@ -21,12 +21,14 @@ namespace BlogTest.Controllers
         }
 
         // GET: BlogCategories
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.BlogCategory.ToListAsync());
         }
 
         // GET: BlogCategories/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -144,6 +146,7 @@ namespace BlogTest.Controllers
         }
 
         // POST: BlogCategories/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
