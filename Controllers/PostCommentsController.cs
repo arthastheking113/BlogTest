@@ -73,6 +73,10 @@ namespace BlogTest.Controllers
                 postComment.CommentDate = DateTime.Now;
                 postComment.Update = postComment.CommentDate;
                 postComment.BlogUserId = _userManager.GetUserId(User);
+                //_userManager.GetUserId(User);
+
+                //(BlogUser user)
+                // user.UserId
                 _context.Add(postComment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details","PostCategories", new { Slug });

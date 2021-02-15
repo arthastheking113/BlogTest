@@ -61,7 +61,8 @@ namespace BlogTest.Areas.Identity.Pages.Account.Manage
             public Byte[]? ImageData { get; set; }
             public string ContentType { get; set; }
         }
-
+        //_userManager.GetUserId(User);
+        // user.Id
         private async Task LoadAsync(BlogUser user)
         {
             Username = await _userManager.GetUserNameAsync(user);
