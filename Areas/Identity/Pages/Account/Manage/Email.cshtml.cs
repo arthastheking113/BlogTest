@@ -47,6 +47,7 @@ namespace BlogTest.Areas.Identity.Pages.Account.Manage
             [Required]
             [EmailAddress]
             [Display(Name = "New email")]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} character long.", MinimumLength = 6)]
             public string NewEmail { get; set; }
         }
 

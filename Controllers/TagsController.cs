@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogTest.Data;
 using BlogTest.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogTest.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
         private readonly ApplicationDbContext _context;

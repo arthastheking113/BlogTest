@@ -61,6 +61,7 @@ namespace BlogTest.Utilities
             await AssignRoleAsync(userManageSvc);
 
         }
+
         private static async Task SeedRoleAsync(RoleManager<IdentityRole> roleSvc)
         {
             // call upon the roleSvc to add the new role
