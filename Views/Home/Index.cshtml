@@ -35,8 +35,11 @@
                 <div class="card-body">
                     <h2 class="card-title" style="font-family:Comic Sans MS, Comic Sans, cursive"> @Html.DisplayFor(modelItem => item.Title)</h2>
                     <p class="card-text"> @Html.Raw(item.Abstract)</p>
-                    <form asp-controller="PostCategories" asp-action="ViewCountIncrement" asp-route-id="@item.Id" asp-route-slug="@item.Slug" id="post-@item.Id"></form>
-                    <a class="btn btn-secondary" href="javascript:document.getElementById('post-@item.Id').submit()">Read More &rarr;</a>
+                    <form asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug" id="post-@item.Id">
+                        <input name="id" value="@item.Id" type="hidden" />
+                        <input type="submit" class="btn btn-secondary" value="Read More &rarr;" />
+                    </form>
+                    @*<a class="btn btn-secondary" href="javascript:document.getElementById('post-@item.Id').submit()">Read More &rarr;</a>*@
                 </div>
                 <div class="card-footer" style="background-color:#f7f7f7;color:#8e8e8e">
                     <div class="row">

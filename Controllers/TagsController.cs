@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlogTest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class TagsController : Controller
     {
         private readonly ApplicationDbContext _context;

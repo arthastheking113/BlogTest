@@ -79,23 +79,11 @@ namespace BlogTest.Controllers
                 return View("Index", posts);
             }
         }
-        [HttpPost]
+        
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ViewCountIncrement (int? id, string slug)
+        public async Task<IActionResult> Details(int? id, string slug)
         {
-            if(id == null || string.IsNullOrWhiteSpace(slug))
-            {
-                return NotFound();
-            }
-            var post = await _context.PostCategory.FindAsync(id);
-            post.ViewCount += 1;
-            await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", new { slug });
-        }
-
-        public async Task<IActionResult> Details(string slug)
-        {
             if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
@@ -110,9 +98,9 @@ namespace BlogTest.Controllers
             {
                 return NotFound();
             }
-            //postCategory.ViewCount = viewCount + 1;
-            //_context.Add(postCategory);
-            //await _context.SaveChangesAsync();
+            var post = await _context.PostCategory.FindAsync(id);
+            post.ViewCount += 1;
+            await _context.SaveChangesAsync();
 
             return View(postCategory);
         }
