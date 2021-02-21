@@ -7,19 +7,19 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">Hello @((await UserManager.GetUserAsync(User)).FullName)</a>
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index"><span class="iconify" data-icon="ant-design:user-outlined" data-inline="true"></span> Hello @((await UserManager.GetUserAsync(User)).FullName)</a>
             </li>
             <li class="nav-item">
-                <button type="submit" class="nav-link btn" style="color:white;font-size:12px;">Logout</button>
+                <button type="submit" class="nav-link btn" style="color:white;font-size:12px;"><span class="iconify" data-icon="ion:log-out-sharp" data-inline="true"></span> Logout</button>
             </li>
         }
         else
         {
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register"><span class="iconify" data-icon="fluent:arrow-bounce-16-filled" data-inline="true"></span> Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><span class="iconify" data-icon="ion:log-in" data-inline="true"></span> Login</a>
             </li>
         }
 
