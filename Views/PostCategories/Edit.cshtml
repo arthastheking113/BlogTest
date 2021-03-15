@@ -25,6 +25,7 @@
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="Slug" class="form-control" />
                 <input type="hidden" asp-for="CreateDate" class="form-control" />
+                <input type="hidden" asp-for="ViewCount" class="form-control" />
                 @if (Model.ImageData != null && Model.ContentType != null)
                 {
                     <input type="hidden" name="imageData" value="@Convert.ToBase64String(Model.ImageData)" class="form-control" />
