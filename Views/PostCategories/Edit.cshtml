@@ -25,9 +25,12 @@
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="Slug" class="form-control" />
                 <input type="hidden" asp-for="CreateDate" class="form-control" />
-                <input type="hidden" asp-for="ViewCount" value="@(Model.ViewCount + 1)" class="form-control" />
-                <input type="hidden" name="imageData" value="@Convert.ToBase64String(Model.ImageData)" class="form-control" />
-                <input type="hidden" name="contentType" value="@Model.ContentType" class="form-control" />
+                @if (Model.ImageData != null && Model.ContentType != null)
+                {
+                    <input type="hidden" name="imageData" value="@Convert.ToBase64String(Model.ImageData)" class="form-control" />
+                    <input type="hidden" name="contentType" value="@Model.ContentType" class="form-control" />
+                }
+
 
                 <div class="form-group">
                     <label asp-for="BlogCategoryId" class="control-label"></label>

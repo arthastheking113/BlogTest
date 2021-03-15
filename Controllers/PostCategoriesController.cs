@@ -80,7 +80,7 @@ namespace BlogTest.Controllers
             }
         }
         
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(int? id, string slug)
         {
 
@@ -98,8 +98,8 @@ namespace BlogTest.Controllers
             {
                 return NotFound();
             }
-            var post = await _context.PostCategory.FindAsync(id);
-            post.ViewCount += 1;
+            //var post = await _context.PostCategory.FindAsync(id);
+            postCategory.ViewCount += 1;
             await _context.SaveChangesAsync();
 
             return View(postCategory);
@@ -208,10 +208,11 @@ namespace BlogTest.Controllers
                             return View(postCategory);
                         }
                     }
-                       
                     postCategory.UpdateDate = DateTime.Now;
                     _context.Update(postCategory);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction("Details", "PostCategories", new { slug });
+                    //return LocalRedirect($"/BlogPost/Details/{slug}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -224,7 +225,7 @@ namespace BlogTest.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", new { slug = _slugService.URLFriendly(postCategory.Title) });
+              
             }
             ViewData["BlogCategoryId"] = new SelectList(_context.BlogCategory, "Id", "Name", postCategory.BlogCategoryId);
             return View(postCategory);

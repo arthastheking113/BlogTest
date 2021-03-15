@@ -107,7 +107,7 @@ namespace BlogTest
                 endpoints.MapControllerRoute(
                    name: "slugRoute",
                    pattern: "BlogPost/Details/{slug}",
-                   defaults: new { Controller = "PostCatagories", action = "Details" });
+                   defaults: new { Controller = "PostCategories", action = "Details" });
 
 
                 endpoints.MapControllerRoute(
