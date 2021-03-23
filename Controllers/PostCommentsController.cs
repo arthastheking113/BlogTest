@@ -70,6 +70,11 @@ namespace BlogTest.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var post = _context.PostCategory.FirstOrDefault(p => p.Id == postComment.PostCategoryId);
+                //post.CountComment += 1;
+                //_context.Update(post);
+                //await _context.SaveChangesAsync();
+
                 postComment.CommentDate = DateTime.Now;
                 postComment.Update = postComment.CommentDate;
                 postComment.BlogUserId = _userManager.GetUserId(User);

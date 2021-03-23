@@ -10,12 +10,6 @@
     var nav = $('nav');
     var navHeight = nav.outerHeight();
 
-    $('.navbar-toggler').on('click', function () {
-        if (!$('#mainNav').hasClass('navbar-reduce')) {
-            $('#mainNav').addClass('navbar-reduce');
-        }
-    })
-
     // Preloader
     $(window).on('load', function () {
         if ($('#preloader').length) {
@@ -47,27 +41,7 @@
         }, 1000);
     });
 
-    /*--/ Star Counter /--*/
-    $('.counter').counterUp({
-        delay: 15,
-        time: 2000
-    });
-
-    /*--/ Star Scrolling nav /--*/
-    var mainNav_height = $('#mainNav').outerHeight() - 22;
-    $('a.js-scroll[href*="#"]:not([href="#"])').on("click", function () {
-        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-            var target = $(this.hash);
-            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-            if (target.length) {
-                var scrollto = target.offset().top - mainNav_height;
-                $('html, body').animate({
-                    scrollTop: scrollto
-                }, 1000, "easeInOutExpo");
-                return false;
-            }
-        }
-    });
+   
 
     // Scroll to sections on load with hash links
     if (window.location.hash) {

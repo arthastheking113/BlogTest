@@ -35,6 +35,9 @@ namespace BlogTest.Models
         [Display(Name = "View")]
         public int ViewCount { get; set; }
 
+        //[Display(Name = "Comment")]
+        //public int CountComment { get; set; }
+
         [Display(Name = "Category")]
         public int BlogCategoryId { get; set; }
         public virtual BlogCategory BlogCategory { get; set; }
