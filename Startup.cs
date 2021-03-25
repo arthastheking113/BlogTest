@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,20 @@ namespace BlogTest
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IEmailSender, EmailService> ();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Lan's Blog", 
+                    Version = "v1" ,
+                    Description = "This is an API of Duy Lan Le Blog",
+                    Contact = new OpenApiContact 
+                    {
+                        Name = "Duy Lan Le",
+                        Email = "arthastheking113@gmail.com",
+                        Url = new System.Uri("https://duylanle-portfolio.netlify.app/")
+                    }
+                });
+            });
             services.AddAuthentication()
                 .AddGitHub(options =>
             {
@@ -94,6 +109,15 @@ namespace BlogTest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lan's Blog");
+                c.InjectJavascript("/swagger/swagger.js");
+                c.InjectStylesheet("/swagger/swagger.css");
+                c.DocumentTitle = "Lan's Blog";
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -114,6 +138,8 @@ namespace BlogTest
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllers();
             });
         }
     }
