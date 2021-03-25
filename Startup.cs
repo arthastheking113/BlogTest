@@ -65,6 +65,14 @@ namespace BlogTest
                     }
                 });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("DefaultPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddAuthentication()
                 .AddGitHub(options =>
             {
