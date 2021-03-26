@@ -14,4 +14,13 @@
         </div>
     </div>
 </header>
-<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+
+    <div class="col text-center">
+        <h1>@ViewData["Title"]</h1>
+        <p> Your Email is confirmed successfully</p>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Home Page</a>
+        <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </div>
+</div>
