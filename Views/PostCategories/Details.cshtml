@@ -20,242 +20,230 @@
                     <span class="meta">
                         Posted by
                         <a href="#">Duy Lan Le</a>
-                        on @Html.DisplayFor(model => model.CreateDate) in <span class="ion-pricetag"></span><b> @Html.DisplayFor(model => model.BlogCategory.Name)</b>
+                        on @Html.DisplayFor(model => model.CreateDate) in <span class="ion-pricetag"></span><b><a asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@Html.DisplayFor(model => model.BlogCategoryId)">@Html.DisplayFor(model => model.BlogCategory.Name)</a></b>
 
                     </span>
                     <span class="meta">Edited on @Html.DisplayFor(model => model.UpdateDate)</span>
-                    <p><span class="ion-chatbox" style="padding-right:2%"> @Model.PostComments.Count </span> <span class="text-white"><span class="iconify" data-icon="carbon:view-filled" data-inline="true"></span> @Model.ViewCount Views</span></p>
+                    <p><span class="ion-chatbox text-white" style="padding-right:2%"> @Model.PostComments.Count </span> <span class="text-white"><span class="iconify text-white" data-icon="carbon:view-filled" data-inline="true"></span> @Model.ViewCount Views</span></p>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<div class="container">
-    <div class="row">
 
-        <!-- Post Content Column -->
-        <div class="col-md-8">
-            @if (User.IsInRole("Administrator"))
-            {
-                <div class="row">
-                    <div class="col text-center">
-                        <button class="btn btn-secondary" style="background-color:#ffffff">
-                            <a asp-controller="PostCategories" asp-action="Edit" asp-route-id="@Model.Id"><span class="iconify" data-icon="ant-design:edit-filled" data-inline="true"></span> Edit Post</a>
-                        </button>
-                        <button class="btn btn-secondary" style="background-color:#ffffff">
-                            <a asp-controller="PostCategories" asp-action="Delete" asp-route-id="@Model.Id"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="true"></span> Delete Post</a>
-                        </button>
+
+
+<main class="ps-main">
+    <div class="ps-blog-grid pt-80 pb-80">
+        <div class="ps-container">
+           
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+                @if (User.IsInRole("Administrator"))
+                {
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-secondary" style="background-color:#ffffff">
+                                <a class="text-dark" asp-controller="PostCategories" asp-action="Edit" asp-route-id="@Model.Id"><span class="iconify" data-icon="ant-design:edit-filled" data-inline="true"></span> Edit Post</a>
+                            </button>
+                            <button class="btn btn-secondary" style="background-color:#ffffff">
+                                <a class="text-dark" asp-controller="PostCategories" asp-action="Delete" asp-route-id="@Model.Id"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="true"></span> Delete Post</a>
+                            </button>
+                        </div>
+                    </div>
+                    <br />
+
+                }
+                <div class="ps-post--detail">
+                    <div class="ps-post__content">
+                        @Html.Raw(Model.Content)
+                    </div>
+                    <div class="ps-post__footer">
+                        <p class="ps-post__tags"><i class="fa fa-tags"></i><a asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@Html.DisplayFor(model => model.BlogCategoryId)">@Html.DisplayFor(model => model.BlogCategory.Name)</a></p>
+                        <div class="ps-post__actions">
+                            <span><i class="fa fa-comments"></i>  @Model.PostComments.Count Comments</span>
+                        </div>
                     </div>
                 </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="card my-4" style="border:1px solid rgb(28, 213, 219);">
+                        <h5 class="card-header">Leave a Comment:</h5>
 
-            }
-            <br />
-            <!-- Post Content -->
-            @Html.Raw(Model.Content)
-
-            <!-- Comments Form -->
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <div class="card my-4" style="border:1px solid rgb(28, 213, 219);">
-                    <h5 class="card-header">Leave a Comment:</h5>
-                    <form asp-controller="PostComments" asp-action="Create">
                         <div class="card-body">
                             <div class="form-group">
-                                <textarea id="commentContent" name="Content" class="form-control"></textarea>
+                                <form class="ps-form--comment" asp-controller="PostComments" asp-action="Create">
+                                    <h3>LEAVE A COMMENT</h3>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                            <div class="form-group">
+                                                <textarea id="commentContent" name="Content" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" asp-for="Slug" class="form-control" />
+                                        <input type="hidden" name="PostCategoryId" value="@Model.Id" class="form-control" />
+                                        <button type="submit" style="background-color:rgb(28, 213, 219);border:none;" class="ps-btn ps-btn--sm ps-contact__submit">Send Message<i class="ps-icon-next"></i></button>
+                                    </div>
+                                </form>
                             </div>
-                            <input type="hidden" asp-for="Slug" class="form-control" />
-                            <input type="hidden" name="PostCategoryId" value="@Model.Id" class="form-control" />
-                            <button type="submit" class="btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">Comment</button>
                         </div>
+                    </div>
+                }
+                else
+                {
+
+                    <form id="loginToComment" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "PostCategories", new { slug = Model.Slug })">
                     </form>
-                </div>
-            }
-            else
-            {
-
-
-                <h4 class="card-body text-center" style="border:1px solid rgb(28, 213, 219);">
-                    <button class="btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
-                        <a class="text-white" href="/Identity/Account/Login">
+                    <h4 class="card-body text-center" style="border:1px solid rgb(28, 213, 219);">
+                        <a href="javascript:document.getElementById('loginToComment').submit()" class="text-white btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
                             Login To Comment
                         </a>
-                    </button>
-                </h4>
+                    </h4>
 
 
-            }
+                }
 
+                <br />
+                <div class="ps-comments">
+                    <h3><i class="fa fa-comments"></i> Comment(@Model.PostComments.Count)</h3>
+                    @foreach (var comment in Model.PostComments.OrderByDescending(c => c.CommentDate))
+                    {
+                        var currentTime = DateTime.Now;
+                        <div class="ps-comments">
 
+                            <div class="ps-comment">
+                                <div class="ps-comment__thumbnail"><img src="@imageService.DecodeFileAvatar(comment.BlogUser.ImageData,comment.BlogUser.ContentType)" alt=""></div>
+                                <div class="ps-comment__content">
 
-            <!-- Comments Form -->
-            <!-- Single Comment -->
-
-            <div class="row">
-                <div class="col">
-                    <h4 class="title-comment">Comments(@Model.PostComments.Count()) </h4>
-                </div>
-            </div>
-            <br />
-
-            @foreach (var comment in Model.PostComments.OrderByDescending(c => c.CommentDate))
-            {
-                var currentTime = DateTime.Now;
-                <div class="media mb-4" style="border-bottom:2px solid rgb(28, 213, 219)">
-                    <img class="d-flex mr-3 rounded-circle" style="width:10%" src="@imageService.DecodeFileAvatar(comment.BlogUser.ImageData,comment.BlogUser.ContentType)" alt="">
-                    <div class="media-body">
-                        @if (!comment.IsModerated)
-                        {
-                            var timeSpan = currentTime.Subtract(comment.CommentDate);
-                            var eslapseSecond = timeSpan.Seconds;
-                            var eslapseMinute = timeSpan.Minutes;
-                            var eslapseHours = timeSpan.Hours;
-                            var eslapseDate = timeSpan.Days;
-                            string commentdate;
-                            if (eslapseDate >= 1)
-                            {
-                                commentdate = eslapseDate.ToString() + " Days Ago";
-
-                            }
-                            else if (eslapseHours >= 1)
-                            {
-                                commentdate = eslapseHours.ToString() + " Hours Ago";
-                            }
-                            else if (eslapseMinute >= 1)
-                            {
-                                commentdate = eslapseMinute.ToString() + " Minutes Ago";
-                            }
-                            else
-                            {
-                                commentdate = eslapseSecond.ToString() + " Seconds Ago";
-                            }
-                        <div class="row">
-                            <div class="col text-left">
-                                <h5 class="mt-0">@comment.BlogUser.FullName</h5>
-                            </div>
-                            @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-                            {
-                                <div class="col text-right">
-                                    <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
-                                    <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
-                                </div>
-                            }
-
-                        </div>
-                            
-                            <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
-                                <div class="col text-left" style="padding:0px 0px">
-                                    @Html.Raw(comment.Content)
-                                </div>
-                                <div class="col text-right">
-                                    <p style="margin:0px;padding:0px;">@commentdate</p>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            var ModeratedDate = currentTime.Subtract(comment.Moderated);
-                            var SecondModeratedDate = ModeratedDate.Seconds;
-                            var MinuteModeratedDate = ModeratedDate.Minutes;
-                            var HoursModeratedDate = ModeratedDate.Hours;
-                            var DateModeratedDate = ModeratedDate.Days;
-                            string ModeratedTime;
-                            if (DateModeratedDate >= 1)
-                            {
-                                ModeratedTime = DateModeratedDate.ToString() + " Days Ago";
-
-                            }
-                            else if (HoursModeratedDate >= 1)
-                            {
-                                ModeratedTime = HoursModeratedDate.ToString() + " Hours Ago";
-                            }
-                            else if (MinuteModeratedDate >= 1)
-                            {
-                                ModeratedTime = MinuteModeratedDate.ToString() + " Minutes Ago";
-                            }
-                            else
-                            {
-                                ModeratedTime = SecondModeratedDate.ToString() + " Seconds Ago";
-                            }
-                            <div class="row">
-                                <div class="col text-left">
-                                    <h5 class="mt-0">@(comment.BlogUser.FullName) (Edited By Mod)</h5>
-                                </div>
-                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-                                {
-                                    <div class="col text-right">
-                                        <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
-                                        <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
-                                    </div>
-                                }
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p style="font-style: italic;font-weight: lighter;">Reason: @Html.Raw(comment.ModeratedReason)</p>
-                                </div>
-                            </div>
-                            <div class="row" style="margin:0px;padding:0px;margin-bottom:15px">
-                                <div class="col text-left" style="padding:0px 0px">
-                                    @Html.Raw(comment.ModeratedContent)
-                                </div>
-                                <div class="col text-right">
-                                    <p style="margin:0px;padding:0px;">Edited @ModeratedTime</p>
-                                </div>
-                            </div>
-                        }
-                    </div>      
-                </div>
-
-            }
-        </div>
-        <div class="col-md-4">
-            <!-- Search Widget -->
-            <div class="sticky">
-                <div class="card">
-                    <h5 class="card-header"><span class="iconify" data-icon="bi:search" data-inline="true"></span> Search For Anything</h5>
-                    <div class="card-body">
-                        <form asp-controller="Home" asp-action="Index" method="get">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search for...">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">Search <span class="iconify" data-icon="bi:search" data-inline="true"></span></button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Categories Widget -->
-
-                <div class="card my-4">
-                    <h5 class="card-header"><span class="iconify" data-icon="bx:bxs-category" data-inline="true"></span> Categories</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <ul class="list-unstyled mb-0" style="background-color:#fff0;border:none;">
-
-
-                                    @foreach (var item in DbContext.BlogCategory.ToList())
+                                    @if (!comment.IsModerated)
                                     {
-                                        <li>
-                                            <a style="background-color: #fff0; border: none; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-radius: 0; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 0.25rem 0rem" asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
-                                        </li>
+                                        var timeSpan = currentTime.Subtract(comment.CommentDate);
+                                        var eslapseSecond = timeSpan.Seconds;
+                                        var eslapseMinute = timeSpan.Minutes;
+                                        var eslapseHours = timeSpan.Hours;
+                                        var eslapseDate = timeSpan.Days;
+                                        string commentdate;
+                                        if (eslapseDate >= 1)
+                                        {
+                                            commentdate = eslapseDate.ToString() + " Days Ago";
+
+                                        }
+                                        else if (eslapseHours >= 1)
+                                        {
+                                            commentdate = eslapseHours.ToString() + " Hours Ago";
+                                        }
+                                        else if (eslapseMinute >= 1)
+                                        {
+                                            commentdate = eslapseMinute.ToString() + " Minutes Ago";
+                                        }
+                                        else
+                                        {
+                                            commentdate = eslapseSecond.ToString() + " Seconds Ago";
+                                        }
+                                        <header>
+                                            <h4>@comment.BlogUser.FullName <span>@commentdate</span></h4>
+
+
+                                        </header>
+                                        <p>@Html.Raw(comment.Content)</p>
+                                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                        {
+
+                                            <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
+                                            <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
+
+                                        }
                                     }
-                                </ul>
+                                    else
+                                    {
+                                        var ModeratedDate = currentTime.Subtract(comment.Moderated);
+                                        var SecondModeratedDate = ModeratedDate.Seconds;
+                                        var MinuteModeratedDate = ModeratedDate.Minutes;
+                                        var HoursModeratedDate = ModeratedDate.Hours;
+                                        var DateModeratedDate = ModeratedDate.Days;
+                                        string ModeratedTime;
+                                        if (DateModeratedDate >= 1)
+                                        {
+                                            ModeratedTime = DateModeratedDate.ToString() + " Days Ago";
+
+                                        }
+                                        else if (HoursModeratedDate >= 1)
+                                        {
+                                            ModeratedTime = HoursModeratedDate.ToString() + " Hours Ago";
+                                        }
+                                        else if (MinuteModeratedDate >= 1)
+                                        {
+                                            ModeratedTime = MinuteModeratedDate.ToString() + " Minutes Ago";
+                                        }
+                                        else
+                                        {
+                                            ModeratedTime = SecondModeratedDate.ToString() + " Seconds Ago";
+                                        }
+
+                                        <header>
+                                            <h4>@comment.BlogUser.FullName (Edited By Mod)<span>Reason: @Html.Raw(comment.ModeratedReason) - @ModeratedTime</span></h4>
+
+
+                                        </header>
+                                        <p>@Html.Raw(comment.ModeratedContent) (Edited)</p>
+                                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                        {
+
+                                            <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Edit" asp-route-id="@comment.Id">Edit</a>
+                                            <a class="btn btn-secondary" asp-controller="PostComments" asp-action="Delete" asp-route-id="@comment.Id">Delete</a>
+
+                                        }
+                                    }
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+
+
+                    }
                 </div>
+               
 
-                <!-- Side Widget -->
+            </div>
+            <div class="col-3">
+                <aside class="ps-widget--sidebar ps-widget--search">
+                    <form class="ps-search--widget" asp-controller="Home" asp-action="Index" method="get">
 
+                        <input type="text" name="search" class="form-control" placeholder="Search for...">
+                        <button type="submit"><i class="ps-icon-search"></i></button>
 
-                <div class="card my-4">
-                    <h5 class="card-header"><span class="iconify" data-icon="ant-design:like-filled" data-inline="true"></span> May be you will like</h5>
-                    <div class="card-body ">
+                    </form>
+                </aside>
+                <aside class="ps-widget--sidebar">
+                    <div class="ps-widget__header">
+                        <h3>Category</h3>
+                    </div>
+                    <div class="ps-widget__content">
+                        <ul class="ps-list--arrow">
+                            @foreach (var item in DbContext.BlogCategory.ToList())
+                            {
+                                <li>
+                                    <a asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </aside>
+
+                <aside class="ps-widget--sidebar">
+                    <div class="ps-widget__header">
+                        <h3>Recent Posts</h3>
+                    </div>
+                    <div class="ps-widget__content">
                         @if (DbContext.PostCategory.ToList().Count() > 4)
                         {
                             var count = 1;
-                            @foreach (var item in DbContext.PostCategory.ToList())
+                            var postList = DbContext.PostCategory.ToList();
+                            postList = postList.OrderBy(a => Guid.NewGuid()).ToList();
+                            @foreach (var item in postList)
                             {
                                 if (count == 5)
                                 {
@@ -263,11 +251,11 @@
                                 }
                                 else
                                 {
-                                    <div class="row" style="padding-bottom:10px;">
-                                        <div class="col">
-                                            <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
-                                        </div>
+                                    <div class="ps-post--sidebar">
+                                        <div class="ps-post__thumbnail"><a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug"></a><img src="@imageService.DecodeFile(item.ImageData,item.ContentType)" style="width:50px;height:40.22px;" alt=""></div>
+                                        <div class="ps-post__content"><a class="ps-post__title" asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a><span>@Html.DisplayFor(modelItem => item.CreateDate)</span></div>
                                     </div>
+
                                     count += 1;
                                 }
 
@@ -277,47 +265,41 @@
                         {
                             @foreach (var item in DbContext.PostCategory.ToList())
                             {
-                                <div class="row" style="padding-bottom:10px;">
-                                    <div class="col">
-                                        <a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a>
-                                    </div>
+                                <div class="ps-post--sidebar">
+                                    <div class="ps-post__thumbnail"><a asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug"></a><img src="@imageService.DecodeFile(item.ImageData,item.ContentType)" style="width:50px;height:40.22px;" alt=""></div>
+                                    <div class="ps-post__content"><a class="ps-post__title" asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@Html.DisplayFor(modelItem => item.Title)</a><span>@Html.DisplayFor(modelItem => item.CreateDate)</span></div>
                                 </div>
                             }
                         }
 
+
                     </div>
-                </div>
-                <div class="card my-4">
-                    <h5 class="card-header"><span class="iconify" data-icon="akar-icons:more-horizontal" data-inline="true"></span> About this page and me?</h5>
-                    <div class="card-body ">
-                        <div class="row" style="padding-bottom:10px;padding-left:5px;">
-                            <div class="col">
-                                <a asp-controller="Home" asp-action="About"><span class="iconify" data-icon="akar-icons:more-horizontal" data-inline="true"></span> About</a>
-                            </div>
+                </aside>
+                <aside class="ps-widget--sidebar">
+                    <div class="ps-widget__header">
+                        <h4>About this page and me?</h4>
+                    </div>
+                    <div class="ps-widget__content">
+                        <div class="ps-post--sidebar">
+                            <div class="ps-post__content"><a class="ps-post__title" asp-controller="Home" asp-action="About"><span class="iconify" data-icon="akar-icons:more-horizontal" data-inline="true"></span> About</a></div>
                         </div>
-                        <div class="row" style="padding-bottom:10px;padding-left:5px;">
-                            <div class="col">
-                                <a asp-controller="Home" asp-action="Contact"><span class="iconify" data-icon="bx:bxs-phone-call" data-inline="true"></span> Contact</a>
-                            </div>
+                        <div class="ps-post--sidebar">
+                            <div class="ps-post__content"><a class="ps-post__title" asp-controller="Home" asp-action="Contact"><span class="iconify" data-icon="bx:bxs-phone-call" data-inline="true"></span> Contact</a></div>
                         </div>
-                        <div class="row" style="padding-bottom:10px;padding-left:5px;">
-                            <div class="col">
-                                <a target="_blank" href="https://duylanle-portfolio.netlify.app/"><span class="iconify" data-icon="dashicons:portfolio" data-inline="true"></span> My Portfolio</a>
-                            </div>
+                        <div class="ps-post--sidebar">
+                            <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://duylanle-portfolio.netlify.app/"><span class="iconify" data-icon="dashicons:portfolio" data-inline="true"></span> My Portfolio</a></div>
                         </div>
-                        <div class="row" style="padding-bottom:10px;padding-left:5px;">
-                            <div class="col">
-                                <a target="_blank" href="https://github.com/arthastheking113/"><span class="iconify" data-icon="akar-icons:github-fill" data-inline="true"></span> Github</a>
-                            </div>
+                        <div class="ps-post--sidebar">
+                            <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://github.com/arthastheking113/"><span class="iconify" data-icon="akar-icons:github-fill" data-inline="true"></span> Github</a></div>
                         </div>
-                        <div class="row" style="padding-bottom:10px;padding-left:5px;">
-                            <div class="col">
-                                <a target="_blank" href="https://www.linkedin.com/in/duy-lan-le-445262163/"><span class="iconify" data-icon="akar-icons:linkedin-fill" data-inline="true"></span> Linkedin</a>
-                            </div>   
+                        <div class="ps-post--sidebar">
+                            <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://www.linkedin.com/in/duy-lan-le-445262163/"><span class="iconify" data-icon="akar-icons:linkedin-fill" data-inline="true"></span> Linkedin</a></div>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
+        </div>
     </div>
-</div>
+</main>
+

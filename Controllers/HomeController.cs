@@ -58,7 +58,7 @@ namespace BlogTest.Controllers
         public async Task<IActionResult> Index(int? page,string search)
         {
             page ??= 1;
-            var pageSize = 3;
+            var pageSize = 9;
             var totalPage = 0;
             var totalRecord = 0;
 
