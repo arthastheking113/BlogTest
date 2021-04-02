@@ -24,7 +24,8 @@
     </div>
 </header>
 
-
+@if (Model.Count() > 0) 
+{ 
 <main class="ps-main">
     <div class="ps-blog-grid pt-80 pb-80">
         <div class="ps-container">
@@ -85,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <aside class="ps-widget--sidebar ps-widget--search">
                         <form class="ps-search--widget" asp-controller="Home" asp-action="Index" method="get">
 
@@ -103,7 +104,7 @@
                                 @foreach (var item in DbContext.BlogCategory.ToList())
                                 {
                                     <li>
-                                        <a  asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                                        <a asp-controller="PostCategories" asp-action="CategoryIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
                                     </li>
                                 }
                             </ul>
@@ -179,5 +180,21 @@
         </div>
     </div>
 </main>
+}
+            else
+            {
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>I'm sorry, I don't have that kind of posts at the moment. Please try a different key word.</h2>
+            <br />
+            <a class="btn btn-secondary" asp-controller="Home" asp-action="Index"><span class="iconify" data-icon="ant-design:home-filled" data-inline="true"></span> Go To Home Page</a>
+            <a class="btn btn-secondary"  asp-controller="Home" asp-action="Contact"><span class="iconify" data-icon="bx:bxs-phone-call" data-inline="true"></span> Contact Me?</a>
+            <a class="btn btn-secondary"  target="_blank" href="https://duylanle-portfolio.netlify.app/"><span class="iconify" data-icon="dashicons:portfolio" data-inline="true"></span> My Portfolio</a>
+            <a class="btn btn-secondary"  target="_blank" href="https://www.linkedin.com/in/duy-lan-le-445262163/"><span class="iconify" data-icon="akar-icons:linkedin-fill" data-inline="true"></span> Linkedin</a>
+        </div>
+    </div>
+
+            }
+
 
 
