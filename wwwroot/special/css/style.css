@@ -1795,7 +1795,7 @@ textarea.form-control {
     .ps-post .ps-post__thumbnail img {
       width: 100%; }
     .ps-post .ps-post__thumbnail:hover > a {
-      background-color: rgba(42, 195, 125, 0.35); }
+      background-color: rgba(28, 213, 219, 0.20); }
   .ps-post .ps-post__overlay {
     position: absolute;
     top: 0;
