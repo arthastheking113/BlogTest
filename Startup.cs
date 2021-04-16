@@ -83,11 +83,7 @@ namespace BlogTest
                     .AllowAnyHeader());
             });
 
-            services.AddAuthentication(cfg =>
-            {
-                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            services.AddAuthentication().AddJwtBearer(options =>
             {
 
                 options.RequireHttpsMetadata = false;

@@ -94,10 +94,8 @@
                 else
                 {
 
-                    <form id="loginToComment" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "PostCategories", new { slug = Model.Slug })">
-                    </form>
                     <h4 class="card-body text-center" style="border:1px solid rgb(28, 213, 219);">
-                        <a href="javascript:document.getElementById('loginToComment').submit()" class="text-white btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
+                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "PostCategories", new { slug = Model.Slug })" class="text-white btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
                             Login To Comment
                         </a>
                     </h4>
