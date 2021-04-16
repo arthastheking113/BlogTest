@@ -36,18 +36,15 @@
                         {
                             <div class="col-md-4 mr-0 ">
                                 <div class="ps-post mb-30">
-                                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="javascript:document.getElementById('post-@item.Id').submit()"></a><img src="@imageService.DecodeFile(item.ImageData,item.ContentType)" style="width:810px;height:150px;" alt=""></div>
+                                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug"></a><img src="@imageService.DecodeFile(item.ImageData,item.ContentType)" style="width:810px;height:150px;" alt=""></div>
                                     <div class="ps-post__content">
-                                        <a class="ps-post__title" href="javascript:document.getElementById('post-@item.Id').submit()">@item.Title</a>
+                                        <a class="ps-post__title" asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">@item.Title</a>
                                         <p class="ps-post__meta">
                                             <span>By:<a target="_blank" href="https://duylanle-portfolio.netlify.app/">Duy Lan Le</a> - @Html.DisplayFor(modelItem => item.CreateDate) / <span class="ion-chatbox text-dark"> @Html.DisplayFor(modelItem => item.PostComments.Count)</span> / <span class="ps-post__meta text-dark"><span class="iconify" data-icon="carbon:view-filled" data-inline="true"></span> @Html.DisplayFor(modelItem => item.ViewCount) Views</span></span>
                                         </p>
 
                                         <p>@Html.Raw(item.Abstract)</p>
-                                        <form asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug" id="post-@item.Id">
-                                            <input name="id" value="@item.Id" type="hidden" />
-                                        </form>
-                                        <a class="ps-morelink" href="javascript:document.getElementById('post-@item.Id').submit()">Read more<i class="fa fa-long-arrow-right"></i></a>
+                                        <a class="ps-morelink" asp-controller="PostCategories" asp-action="Details" asp-route-slug="@item.Slug">Read more<i class="fa fa-long-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>
