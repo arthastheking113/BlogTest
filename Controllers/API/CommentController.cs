@@ -114,5 +114,37 @@ namespace BlogTest.Controllers.API
             }
             return Ok(listComment);
         }
+
+
+        [HttpPost("postComment")]
+        public async Task<IActionResult> PostCommentAsync(CommentAPIModel model)
+        {
+            if (string.IsNullOrEmpty(model.Userid) || _context.Users.FirstOrDefault(u => u.Id == model.Userid) is null)
+            {
+                return BadRequest("User is null, Please Log in to comment");
+            }
+            if (string.IsNullOrEmpty(model.Content))
+            {
+                return BadRequest("Please enter something to comment");
+            }
+            
+            var post = _context.PostCategory.FirstOrDefault(c => c.Slug == model.Slug);
+            if (post is null)
+            {
+                return BadRequest("Unknown Post :(");
+            }
+            var postId = post.Id;
+            PostComment newComment = new PostComment
+            {
+                Content = model.Content,
+                CommentDate = DateTime.Now,
+                Update = DateTime.Now,
+                PostCategoryId = postId,
+                BlogUserId = model.Userid
+            };
+            await _context.AddAsync(newComment);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

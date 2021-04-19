@@ -19,5 +19,7 @@ namespace BlogTest.Models
         public string CommentCount { get; set; }
         public int Categoryid { get; set; }
         public string Category { get; set; }
+        public int TotalPage { get; set; }
+        public int CurrentPage { get; set; }
     }
 }

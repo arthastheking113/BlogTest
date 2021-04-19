@@ -64,12 +64,8 @@ namespace BlogTest.Controllers.API
                                                                                         c.BlogUser.LastName.ToLower().Contains(model.Search) ||
                                                                                         c.BlogUser.Email.ToLower().Contains(model.Search))).ToListAsync();
                     postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
-                    totalRecord = postSearch.Count;
-                    totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
-                    var skipCount = ((int)model.TotalPage - 1) * pageSize;
-                    var posts = postSearch.Skip(skipCount).Take(pageSize);
                     List<Post> listPost = new List<Post>();
-                    foreach (var item in posts)
+                    foreach (var item in postSearch)
                     {
                         var imageData = _imageService.DecodeFile(item.ImageData, item.ContentType);
                         var post = new Post
@@ -96,12 +92,8 @@ namespace BlogTest.Controllers.API
                 {
                     var postSearch = await postIdSearch.Include(h => h.PostComments).Include(p => p.BlogCategory).Where(y => y.IsproductionReady).ToListAsync();
                     postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
-                    totalRecord = postSearch.Count;
-                    totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
-                    var skipCount = ((int)model.TotalPage - 1) * pageSize;
-                    var posts = postSearch.Skip(skipCount).Take(pageSize);
                     List<Post> listPost = new List<Post>();
-                    foreach (var item in posts)
+                    foreach (var item in postSearch)
                     {
                         var imageData = _imageService.DecodeFile(item.ImageData, item.ContentType);
                         var post = new Post
@@ -142,12 +134,8 @@ namespace BlogTest.Controllers.API
                                                                                         c.BlogUser.LastName.ToLower().Contains(model.Search) ||
                                                                                         c.BlogUser.Email.ToLower().Contains(model.Search))).ToListAsync();
                     postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
-                    totalRecord = postSearch.Count;
-                    totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
-                    var skipCount = ((int)model.TotalPage - 1) * pageSize;
-                    var posts = postSearch.Skip(skipCount).Take(pageSize);
                     List<Post> listPost = new List<Post>();
-                    foreach (var item in posts)
+                    foreach (var item in postSearch)
                     {
                         var imageData = _imageService.DecodeFile(item.ImageData, item.ContentType);
                         var post = new Post
@@ -175,12 +163,8 @@ namespace BlogTest.Controllers.API
                     var postSearch = await postIdSearch.Include(h => h.PostComments)
                         .Include(p => p.BlogCategory).Where(y => y.IsproductionReady).ToListAsync();
                     postSearch = postSearch.OrderByDescending(c => c.UpdateDate).ToList();
-                    totalRecord = postSearch.Count;
-                    totalPage = Convert.ToInt32(totalRecord / pageSize) + 1;
-                    var skipCount = ((int)model.TotalPage - 1) * pageSize;
-                    var posts = postSearch.Skip(skipCount).Take(pageSize);
                     List<Post> listPost = new List<Post>();
-                    foreach (var item in posts)
+                    foreach (var item in postSearch)
                     {
                         var imageData = _imageService.DecodeFile(item.ImageData, item.ContentType);
                         var post = new Post
