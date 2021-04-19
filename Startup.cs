@@ -141,7 +141,7 @@ namespace BlogTest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors("DefaultPolicy");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -150,10 +150,10 @@ namespace BlogTest
                 c.InjectStylesheet("/swagger/swagger.css");
                 c.DocumentTitle = "Lan's Blog";
             });
-         
-            app.UseStaticFiles();
-            app.UseCors("DefaultPolicy");
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+        
+
             app.UseRouting();
 
             app.UseAuthentication();
