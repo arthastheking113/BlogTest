@@ -83,7 +83,7 @@ namespace BlogTest
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
-            services.AddMvc();
+
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthentication().AddJwtBearer(options =>
             {
