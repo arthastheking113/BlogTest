@@ -151,7 +151,6 @@ namespace BlogTest
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors("DefaultPolicy");
-
             app.UseRouting();
 
             app.UseAuthentication();
