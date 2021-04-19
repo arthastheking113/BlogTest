@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,7 +83,8 @@ namespace BlogTest
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
-
+            services.AddMvc();
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthentication().AddJwtBearer(options =>
             {
 
@@ -148,9 +150,12 @@ namespace BlogTest
                 c.InjectStylesheet("/swagger/swagger.css");
                 c.DocumentTitle = "Lan's Blog";
             });
-            app.UseHttpsRedirection();
+         
             app.UseStaticFiles();
             app.UseCors("DefaultPolicy");
+            app.UseHttpsRedirection();
+            app.UseMvc();
+
             app.UseRouting();
 
             app.UseAuthentication();
