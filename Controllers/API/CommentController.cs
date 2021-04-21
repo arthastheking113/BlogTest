@@ -39,7 +39,7 @@ namespace BlogTest.Controllers.API
             List<Comment> listComment = new List<Comment>();
             foreach (var item in comments)
             {
-                var imageData = _imageService.DecodeFileAvatar(item.BlogUser.ImageData, item.BlogUser.ContentType);
+                var imageData = _imageService.DecodeFileAvatarAPI(item.BlogUser.ImageData, item.BlogUser.ContentType);
                 var currentTime = DateTime.Now;
                 if (!item.IsModerated)
                 {

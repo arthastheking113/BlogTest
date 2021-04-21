@@ -46,5 +46,14 @@ namespace BlogTest.Service
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";
         }
+        public string DecodeFileAvatarAPI(byte[] imageData, string contentType)
+        {
+            if (imageData == null)
+            {
+                return "assets/img/avatar.png";
+            }
+            var imageArray = Convert.ToBase64String(imageData);
+            return $"data:{contentType};base64,{imageArray}";
+        }
     }
 }

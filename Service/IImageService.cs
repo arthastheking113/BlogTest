@@ -14,6 +14,8 @@ namespace BlogTest.Service
 
         string DecodeFileAvatar(byte[] imageData, string contentType);
 
+        string DecodeFileAvatarAPI(byte[] imageData, string contentType);
+
         string RecordContentType(IFormFile image);
 
 
