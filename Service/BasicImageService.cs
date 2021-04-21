@@ -32,7 +32,7 @@ namespace BlogTest.Service
         {
             if (imageData == null)
             {
-                return "http://placehold.it/750x300";
+                return "https://placehold.it/750x300";
             }
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";
