@@ -106,7 +106,7 @@ namespace BlogTest.Controllers.API
                         Id = item.Id,
                         Name = item.BlogUser.FullName,
                         Image = imageData,
-                        Content = item.Content,
+                        Content = item.ModeratedContent,
                         Date = commentdate
                     };
                     listComment.Add(comment);
