@@ -73,7 +73,7 @@ namespace BlogTest.Controllers.API
                             Id = item.Id,
                             Title = item.Title,
                             Abstract = StripHTML(item.Abstract),
-                            Content = Regex.Replace(item.Content, @"<(.|\n)*?>", string.Empty),
+                            Content = "<style> img { width: 100 %; height: auto;} </style>" + item.Content,
                             CreateDate = item.CreateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             UpdateDate = item.UpdateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             Slug = item.Slug,
@@ -101,7 +101,7 @@ namespace BlogTest.Controllers.API
                             Id = item.Id,
                             Title = item.Title,
                             Abstract = StripHTML(item.Abstract),
-                            Content = Regex.Replace(item.Content, @"<(.|\n)*?>", string.Empty),
+                            Content = "<style> img { width: 100 %; height: auto;} </style>" + item.Content,
                             CreateDate = item.CreateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             UpdateDate = item.UpdateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             Slug = item.Slug,
@@ -143,7 +143,7 @@ namespace BlogTest.Controllers.API
                             Id = item.Id,
                             Title = item.Title,
                             Abstract = StripHTML(item.Abstract),
-                            Content = Regex.Replace(item.Content, @"<(.|\n)*?>", string.Empty),
+                            Content = "<style> img { width: 100 %; height: auto;} </style>" + item.Content,
                             CreateDate = item.CreateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             UpdateDate = item.UpdateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             Slug = item.Slug,
@@ -172,7 +172,7 @@ namespace BlogTest.Controllers.API
                             Id = item.Id,
                             Title = item.Title,
                             Abstract = StripHTML(item.Abstract),
-                            Content = Regex.Replace(item.Content, @"<(.|\n)*?>", string.Empty),
+                            Content = "<style> img { width: 100 %; height: auto;} </style>" + item.Content,
                             CreateDate = item.CreateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             UpdateDate = item.UpdateDate.ToString("dd MMMM yyyy - hh:mm tt"),
                             Slug = item.Slug,
@@ -296,6 +296,32 @@ namespace BlogTest.Controllers.API
                 Category = postCategory.BlogCategory.Name
             };
             return Ok(post);
+        }
+
+
+
+
+        [HttpGet("postdetailsViewIncrease/{slug}")]
+        public async Task<IActionResult> getPostViewIncreaseAsync(string slug)
+        {
+            if (string.IsNullOrEmpty(slug))
+            {
+                return BadRequest("Invalid Slug");
+            }
+
+            var postCategory = await _context.PostCategory
+                .Include(p => p.BlogCategory)
+                .Include(m => m.PostComments)
+                .ThenInclude(b => b.BlogUser)
+                .FirstOrDefaultAsync(m => m.Slug == slug);
+            if (postCategory == null)
+            {
+                return BadRequest("Undefined post");
+            }
+            postCategory.ViewCount += 1;
+            await _context.SaveChangesAsync();
+           
+            return Ok();
         }
     }
 }
