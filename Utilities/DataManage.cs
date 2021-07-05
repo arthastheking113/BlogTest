@@ -82,7 +82,7 @@ namespace BlogTest.Utilities
                 EmailConfirmed = true
 
             };
-            await userManagerSvc.CreateAsync(adminUser, "Nhoclanro1!");
+            await userManagerSvc.CreateAsync(adminUser, "Abc123!");
             //create someone else as a moderator
             var modUser = new BlogUser()
             {
@@ -94,7 +94,7 @@ namespace BlogTest.Utilities
                 EmailConfirmed = true
 
             };
-            await userManagerSvc.CreateAsync(modUser, "Nhoclanro1!");
+            await userManagerSvc.CreateAsync(modUser, "Abc123!");
         }
         private static async Task AssignRoleAsync(UserManager<BlogUser> userManagerSvc)
         {
