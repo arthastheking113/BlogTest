@@ -94,10 +94,8 @@
                 else
                 {
 
-                    <form id="loginToComment" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "PostCategories", new { slug = Model.Slug })">
-                    </form>
                     <h4 class="card-body text-center" style="border:1px solid rgb(28, 213, 219);">
-                        <a href="javascript:document.getElementById('loginToComment').submit()" class="text-white btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
+                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "PostCategories", new { slug = Model.Slug })" class="text-white btn btn-secondary" style="background-color:rgb(28, 213, 219);border:none;">
                             Login To Comment
                         </a>
                     </h4>
@@ -290,7 +288,7 @@
                             <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://duylanle-portfolio.netlify.app/"><span class="iconify" data-icon="dashicons:portfolio" data-inline="true"></span> My Portfolio</a></div>
                         </div>
                         <div class="ps-post--sidebar">
-                            <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://github.com/arthastheking113/"><span class="iconify" data-icon="akar-icons:github-fill" data-inline="true"></span> Github</a></div>
+                            <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://github.com/arthastheking113/BlogTest"><span class="iconify" data-icon="akar-icons:github-fill" data-inline="true"></span> Github</a></div>
                         </div>
                         <div class="ps-post--sidebar">
                             <div class="ps-post__content"><a class="ps-post__title" target="_blank" href="https://www.linkedin.com/in/duy-lan-le-445262163/"><span class="iconify" data-icon="akar-icons:linkedin-fill" data-inline="true"></span> Linkedin</a></div>

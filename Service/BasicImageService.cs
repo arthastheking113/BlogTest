@@ -32,7 +32,7 @@ namespace BlogTest.Service
         {
             if (imageData == null)
             {
-                return "http://placehold.it/750x300";
+                return "https://placehold.it/750x300";
             }
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";
@@ -42,6 +42,15 @@ namespace BlogTest.Service
             if (imageData == null)
             {
                 return "/img/avatar.png";
+            }
+            var imageArray = Convert.ToBase64String(imageData);
+            return $"data:{contentType};base64,{imageArray}";
+        }
+        public string DecodeFileAvatarAPI(byte[] imageData, string contentType)
+        {
+            if (imageData == null)
+            {
+                return "assets/img/avatar.png";
             }
             var imageArray = Convert.ToBase64String(imageData);
             return $"data:{contentType};base64,{imageArray}";

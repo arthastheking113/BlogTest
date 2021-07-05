@@ -22,7 +22,7 @@ namespace BlogTest.Models
         public DateTime CreateDate { get; set; }
 
         [Display(Name = "Update Date")]
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
         [Display(Name = "Product Ready?")]
         public bool IsproductionReady { get; set; }

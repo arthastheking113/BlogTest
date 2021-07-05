@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,11 +84,8 @@ namespace BlogTest
                     .AllowAnyHeader());
             });
 
-            services.AddAuthentication(cfg =>
-            {
-                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAuthentication().AddJwtBearer(options =>
             {
 
                 options.RequireHttpsMetadata = false;
@@ -142,8 +140,8 @@ namespace BlogTest
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-
+            }  
+            app.UseCors("DefaultPolicy");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -154,7 +152,7 @@ namespace BlogTest
             });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCors("DefaultPolicy");
+        
 
             app.UseRouting();
 

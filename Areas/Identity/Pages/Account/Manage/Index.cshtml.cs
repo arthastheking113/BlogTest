@@ -65,8 +65,9 @@ namespace BlogTest.Areas.Identity.Pages.Account.Manage
         // user.Id
         private async Task LoadAsync(BlogUser user)
         {
-            Username = await _userManager.GetUserNameAsync(user);
+            var userName = await _userManager.GetUserNameAsync(user);
 
+            Username = userName;
             Input = new InputModel
             {
                 PhoneNumber = user.PhoneNumber,
