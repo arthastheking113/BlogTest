@@ -50,15 +50,15 @@ namespace BlogTest.Utilities
             // an instance of usermanager
             var userManageSvc = svcProvider.GetRequiredService<UserManager<BlogUser>>();
 
-            await dbContextSvc.Database.MigrateAsync();
+            //await dbContextSvc.Database.MigrateAsync();
             //await dbContextSvc.Database.MigrateAsync();
 
             // add role to the system
-            await SeedRoleAsync(roleManagerSvc);
+            //await SeedRoleAsync(roleManagerSvc);
             //add user
-            await SeedUserAsync(userManageSvc);
+            //await SeedUserAsync(userManageSvc);
             // assign role
-            await AssignRoleAsync(userManageSvc);
+            //await AssignRoleAsync(userManageSvc);
 
         }
 
